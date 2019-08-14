@@ -3,7 +3,7 @@
 |--------------------------------------------------------------------------
 | 系统启动引导程序
 |-------------------------------------------------------------------------- 
-| Copyright (c) 2017--20xx年 捞月狗. All rights reserved.
+| Copyright (c)  All rights reserved.
 |
 | This value is the name of your application. This value is used when the
 | framework needs to place the application's name in a notification or
