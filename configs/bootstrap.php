@@ -88,12 +88,12 @@ class Bootstrap
 	 */
 	protected function initLoader(  $options = [] ): void
 	{
-		$this->di['loader'] = (new PhLoader()) -> registerDirs(array(
+		$this->di['loader'] = (new PhLoader()) -> registerDirs([
 			ROOT_PATH . '/app/controllers/', 
 			ROOT_PATH . '/app/librarys/', 
 			ROOT_PATH . '/app/models/',
 			ROOT_PATH . '/app/services/'
-		)) -> register();
+		]) -> register();
 	}
 
 	/**

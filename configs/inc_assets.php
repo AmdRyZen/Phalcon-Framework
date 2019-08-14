@@ -11,19 +11,19 @@
 // +----------------------------------------------------------------------
 $assets = array();
 // 全局样式
-$assets["global"] = array(
+$assets["global"] = [
     "name"      =>"global",             // 名称，也可以做集合名称来使用
     "title"     =>"全局",                // 标题
     "version"   =>"1.0.0",              // 版本 
     "prefix"    =>"",                   // 前缀,移服务器方便
     "target"    =>"global",             // 如果压缩后，产生的文件新名称
-    "css" => array(
+    "css" => [
     
-    ),
-    "js" => array( 	
-    	array("path" => "public/js/jquery-3.2.1.min.js"),
-	)
-);
+    ],
+    "js" => [	
+    	["path" => "public/js/jquery-3.2.1.min.js"],
+	]
+];
 // 公共样式
 $assets["common"] = array();
  
