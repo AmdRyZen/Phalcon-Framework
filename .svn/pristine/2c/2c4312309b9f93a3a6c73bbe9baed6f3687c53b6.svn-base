@@ -1,0 +1,35 @@
+<?php
+/*
+|--------------------------------------------------------------------------
+| 用户文章生成
+|--------------------------------------------------------------------------
+|
+| This value is the name of your application. This value is used when the
+| framework needs to place the application's name in a notification or
+| any other location as required by the application or its packages.
+|
+*/
+class ArticleTask extends \Phalcon\Cli\Task
+{
+
+	/**
+	* 消耗Redis 队列写入cmf_article
+	*
+	* @var array
+	*/
+	public function mainAction(array $params)
+	{
+		try{
+	
+			$service = new ArticleService( );
+
+			$service->article( );
+
+			//$this->logger->info('Welcome to you');
+		
+		}catch (\Exception $e) {
+		    $this->logger->error($e->getMessage());
+		}
+	}
+
+}

@@ -1,0 +1,374 @@
+<?php
+$css = $this -> assets -> get('header');
+$js  = $this -> assets -> get('footer');
+?>
+
+<div class="dropdown" style = "float: left; width:100px; margin-left: 20px; margin-top: 20px;">
+<select class="select1">
+  {% for v in languages %}
+  <option {{language == v  ? 'selected' : ''}}>{{v}}</option>
+  {% endfor %}
+</select>
+</div>
+
+
+<div class="dropdown" style = "float: left; width:100px; margin-left: 10px; margin-top: 20px;">
+<select class="select2">
+  {% for v in categorys %}
+  <option {{category == v ? 'selected' : ''}}>{{v}}</option>
+  {% endfor %}
+</select>
+</div>
+
+<div class="dropdown" style = "float: left; width:100px; margin-left: 10px; margin-top: 14px;">
+<button type="button" class="btn btn-info btn_switch" >切换</button>
+</div>
+
+
+<div class="dropdown" style = "float: left;  margin-left: 10px; margin-top: 14px;">
+	<button type="button" class="btn btn-info btn_add" data-toggle="modal" data-target="#addModal">添加</button>
+</div>
+
+<div class="dropdown" style = "float: left;  margin-left: 22px; margin-top: 14px;">
+	<button type="button" class="btn btn-info btn_import" data-toggle="modal" data-target="#importModal">导入</button>
+</div>
+
+
+<div style = "float: right; margin-right: 10px; margin-top: 8px;">
+	<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid"> 
+	<div class="navbar-header">
+		<a class="navbar-brand" href="#">快速搜索🔍</a>
+	</div>
+	<form action="/index.html" method="get" class="navbar-form navbar-left" role="search">
+		<div class="form-group">
+			<input type="hidden" class="form-control" placeholder="" name = "language" value = {{language}}>
+			<input type="hidden" class="form-control" placeholder="" name = "category" value = {{category}}>
+			<input type="text" class="form-control" placeholder="Search" name = "search" value = {{search}}>
+		</div>
+		<button type="submit" class="btn btn-default search">提交</button>
+	</form>
+	</div>
+</nav>
+</div>
+
+
+<div style=" clear: both;">
+
+	<center><h1>{{language}}/{{category}}</h1></center>
+
+        <center>
+		<table class="table table-striped" style = "width:80%;">
+		  <thead>
+		    <tr>
+		      <th>id</th>
+		      <th>name</th>
+		      <th>update</th>
+		    </tr>
+		  </thead>
+		  <tbody class = 'prepend'>
+		  	{% for i,v in messages %}
+		    <tr>
+		      <td class = "{{i}}gid">{{v['gid']}}</td>
+		      <td class = "{{i}}gname">{{v['gname']}}</td>
+		      <td>
+		      <!-- 	<input type="hidden" class="form-control" id="gid" placeholder="" value = {{v['gid']}}>
+		        <input type="hidden" class="form-control" id="gname" placeholder="" value = {{v['gname']}}> -->
+		      	<!-- 信息警告消息的上下文按钮 -->
+				<button type="button" class="btn btn-info btn-primary btn_click" data-toggle="modal" data-target="#myModal" key_id = {{v['id']}}    _id = {{i}}gid  _name = {{i}}gname >修改</button>
+			  </td>
+		    </tr>
+		    {% endfor %}
+		  </tbody>
+		</table>
+		</center>
+
+</div>
+
+
+
+<!-- 模态框（Modal） Update-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+				</button>
+				<center><h4 class="modal-title" id="myModalLabel">
+					修改国际化语言
+				</h4></center>
+			</div>
+				<form role="form">
+				    <div class="form-group">
+				    	<label for="name">ID：</label>
+				        <input type="text" class="form-control" id="idx" placeholder="请输入id">
+				        <label for="name">名称：</label>
+				        <input type="text" class="form-control" id="namex" placeholder="请输入名称">
+                        
+                        <input type="hidden" class="form-control" id="key_id" placeholder="">
+				        <input type="hidden" class="form-control" id="_id" placeholder="">
+				        <input type="hidden" class="form-control" id="_name" placeholder="">
+				    </div>
+				   
+				</form>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					关闭
+				</button>
+				<button type="button" class="btn btn-primary btn_update" language = {{language}} category = {{category}}>
+					提交更改
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+<!-- 模态框（Modal） Add-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+				</button>
+				<center><h4 class="modal-title" id="myModalLabel">
+					添加国际化语言
+				</h4></center>
+			</div>
+				<form role="form">
+
+				    <div class="form-group">
+				    	<label for="name">ID：</label>
+				        <input type="text" class="form-control" id="aid" placeholder="请输入id">
+				        <label for="name">名称：</label>
+				        <input type="text" class="form-control" id="aname" placeholder="请输入名称">
+				    </div>
+				   
+				</form>
+			<div class="modal-footer">
+				<span class = "msg" style="margin-right: 10%; font-size: 18px; color: pink; font-style: italic; "></span>
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="setTimeout(function() {window.location.reload()},1000)">
+					关闭
+				</button>
+				<button type="button" class="btn btn-primary btn_add" language = {{language}} category = {{category}}>
+					添加
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<!-- 模态框（Modal） Import-->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+				</button>
+				<center><h4 class="modal-title" id="myModalLabel">
+					导入Excel
+				</h4></center>
+			</div>
+
+				<form action="/excel.html" method="post" enctype="multipart/form-data" role="form">
+					<div class="form-group">
+						<label for="inputfile">文件输入</label>
+						<input type="hidden" class="form-control" placeholder="" name = "language" value = {{language}}>
+						<input type="hidden" class="form-control" placeholder="" name = "category" value = {{category}}>
+						<input type="file" id="inputfile"  name="file">
+					</div>
+					<!-- <button type="submit" class="btn btn-default">提交</button> -->
+				
+					<div class="modal-footer">
+						<span class = "msg" style="margin-right: 10%; font-size: 18px; color: pink; font-style: italic; "></span>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							关闭
+						</button>
+						<button type="submit" class="btn btn-primary btn_import" language = {{language}} category = {{category}}>
+							导入
+						</button>
+					</div>
+			</form>
+
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<style type="text/css">.min{ width:1000px;}</style>
+<style type="text/css">.max{ width:100%;}</style>
+
+<script>
+   $(function () { $('#myModal').modal('hide')});
+
+   window.onresize = function(){
+        var win = $(window).width(),
+            main = $('#main');
+        if(win < 1000){
+            main.addClass('min').removeClass('max');
+        }else{
+        	main.addClass('max').removeClass('min');
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+
+	(function(){
+		var lcy_index = {
+			b_event:function(){
+				this.btn_click();
+				this.btn_update();
+				this.btn_switch();
+				this.btn_add();
+			},
+			btn_click:function(){
+				$("body .btn_click").on("click", function () {
+					var	key_id   = $(this).attr("key_id");
+					var	_id      = $(this).attr("_id");
+					var	_name    = $(this).attr("_name");
+
+                    $("#key_id").val(key_id);
+					$("#_id").val(_id);
+					$("#_name").val(_name);
+
+					$("#idx").val($("."+_id).text().trim());
+					$("#namex").val($("."+_name).text().trim());
+
+				});
+				
+			},
+			btn_update:function(){
+				$("body .btn_update").on("click", function () {
+					var language = $(this).attr("language").trim();
+					var category = $(this).attr("category").trim();
+
+					var	key_id   = $("#key_id").val().trim();
+					var	idx      = $("#idx").val().trim();
+					var	namex    = $("#namex").val().trim();
+
+					var	_id      = $("#_id").val().trim();
+					var	_name    = $("#_name").val().trim();
+					
+					$.ajax({
+					    url:'/update.ajax',
+					    type:'POST',   //GET
+					    async:true,    //或false,是否异步
+					    data:{
+					        "language" : language ,
+					        "category" : category ,
+					        "key_id" : key_id ,
+					        "idx" : idx ,
+					        "namex" : namex 
+					    },
+					    timeout:5000,     //超时时间
+					    dataType:'json',  //返回的数据格式：json/xml/html/script/jsonp/text
+					    beforeSend:function(xhr){
+					        //console.log(xhr)
+					    },
+					    success:function(data,textStatus,jqXHR){
+					        //console.log(namex)
+					        if(data.msg == 'ok') {
+					        	$("."+_id).text(idx);
+								$("."+_name).text(namex);
+
+					        	$(".fade").hide(1200);
+					        }else{
+					        	alert('修改失败!')
+					        }
+					    },
+					    error:function(xhr,textStatus){
+					        console.log('错误')
+					        console.log(xhr)
+					        console.log(textStatus)
+					    },
+					    complete:function(){
+					        console.log('结束')
+					    }
+					})
+
+
+				})
+				
+			},
+			btn_switch:function(){
+				$("body .btn_switch").on("click", function () {
+					var language = $(".select1  option:selected").text().trim();
+					var category = $(".select2  option:selected").text().trim();
+					window.location.href="/index.html?language=" + language + "&category=" +category;    
+				})
+				
+			},
+			btn_add:function(){
+				$("body .btn_add").on("click" , function () {
+					var language = $(this).attr("language").trim();
+					var category = $(this).attr("category").trim();
+					var	aid      = $("#aid").val().trim();
+					var	aname    = $("#aname").val().trim();
+
+					if(aid == '' || aname == '') {
+						$(".msg").html('请填写对应信息！');return;
+					}
+
+
+					$.ajax({
+					    url:'/add.ajax',
+					    type:'POST',   //GET
+					    async:true,    //或false,是否异步
+					    data:{
+					        "language" : language ,
+					        "category" : category ,
+					        "aid" : aid ,
+					        "aname" : aname 
+					    },
+					    timeout:5000,     //超时时间
+					    dataType:'json',  //返回的数据格式：json/xml/html/script/jsonp/text
+					    beforeSend:function(xhr){
+					        //console.log(xhr)
+					    },
+					    success:function(data,textStatus,jqXHR){
+					        //console.log(data)
+					        $(".msg").html(data.msg);
+					        $("#aid").val("");
+					        $("#aname").val("");
+
+					        if(data.msg == 'ok') {
+					        	var str = '<tr>'
+									      +'<td>'+aid+'</td>'
+									      +'<td>'+aname+'</td>'
+									      +'<td>'
+										  +'<button type="button" class="btn btn-info btn-primary btn_click" data-toggle="modal"'
+										  +'data-target="#myModal">修改</button>'
+										  +'</td>'
+									      +'</tr>';
+							    $(".prepend").prepend(str);
+
+					        }
+					       
+					    },
+					    error:function(xhr,textStatus){
+					        console.log('错误')
+					        console.log(xhr)
+					        console.log(textStatus)
+					    },
+					    complete:function(){
+					        console.log('结束')
+					    }
+					})
+					
+				})
+			}
+		}
+		lcy_index.b_event();
+	})()
+	
+</script>
