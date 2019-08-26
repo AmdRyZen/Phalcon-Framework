@@ -17,7 +17,16 @@ class ApiController extends BaseController
 
 	public function testAction( $id = 0 ) 
 	{
-        return $this->success(['id' => $id]);
+		//echo "<pre>";print_r( phpinfo() );exit;
+		$yac = new \Yac();
+		$key = 'key';
+		$yac->set( $key, ['id' => 111111]);
+
+		$ret = $yac->get($key);
+
+		//echo "<pre>";print_r( $yac->info() );exit;
+
+        return $this->success(["ret" => $ret]);
     }
 
 }

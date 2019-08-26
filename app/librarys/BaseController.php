@@ -92,11 +92,12 @@ class BaseController extends Controller {
 	 * @param string $id    返回的相关编号
 	 * @return
 	 */
-	protected function success($msg, $data = array(), $id = null) {
-		$result = array('success' => true, 'msg' => $msg);
+	protected function success($data = [], $msg = 'ok', $code = 200)
+	{
+		$result = ['success' => true, 'msg' => $msg];
 			$result['data'] = $data;
-		if (!empty($id))
-			$result['id'] = $id;
+		if (!empty($code))
+			$result['code'] = $code;
 
 		$this -> json($result,200);
 	}
@@ -112,12 +113,11 @@ class BaseController extends Controller {
 	 * @param int       $code   HTTP Status Code
 	 * @return void
 	 */
-	protected function failure($msg, $code=400,$data = array(), $id = null) {
-		$result = array('success' => false, 'msg' => $msg);
+	protected function failure($data = [], $msg = 'error', $code=400) 
+	{
+		$result = ['success' => false, 'msg' => $msg];
 		if (!empty($data))
 			$result['data'] = $data;
-		if (!empty($id))
-			$result['id'] = $id;
 
 		$this -> json($result,$code);
 	}
